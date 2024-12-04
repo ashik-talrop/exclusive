@@ -1,0 +1,198 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "photo": "/assets/images/dog-food.png",
+      "title": "Breed Dry Dog Food",
+      "description": "Premium food for dogs of all breeds and sizes.",
+      "rating": 3,
+      "review_count": 35,
+      "price": 100,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": []
+    },
+    {
+      "id": 2,
+      "photo": "/assets/images/camara.png",
+      "title": "CANON EOS DSLR Camera",
+      "description": "High-quality DSLR camera for professional photography.",
+      "rating": 4,
+      "review_count": 95,
+      "price": 360,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": []
+    },
+    {
+      "id": 3,
+      "photo": "/assets/images/lap.png",
+      "title": "ASUS FHD Gaming Laptop",
+      "description": "A powerful gaming laptop with stunning Full HD display.",
+      "rating": 5,
+      "review_count": 325,
+      "price": 700,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": []
+    },
+    {
+      "id": 4,
+      "photo": "/assets/images/cream.png",
+      "title": "Curology Product Set",
+      "description": "Personalized skincare for healthy and glowing skin.",
+      "rating": 4,
+      "review_count": 145,
+      "price": 500,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": []
+    },
+    {
+      "id": 5,
+      "photo": "/assets/images/car.png",
+      "title": "Kids Electric Car",
+      "description": "Fun and safe electric car designed for kids.",
+      "rating": 5,
+      "review_count": 65,
+      "price": 960,
+      "category": "Phones",
+      "new_product": true,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": ["#FB1314", "#DB4444"]
+    },
+    {
+      "id": 6,
+      "photo": "/assets/images/boot.png",
+      "title": "Jr. Zoom Soccer Cleats",
+      "description": "Durable soccer cleats for junior players.",
+      "rating": 5,
+      "review_count": 35,
+      "price": 1160,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": ["#EEFF61", "#DB4444"]
+    },
+    {
+      "id": 7,
+      "photo": "/assets/images/controller.png",
+      "title": "GP11 Shooter USB Gamepad",
+      "description": "Ergonomic gamepad for ultimate gaming experience.",
+      "rating": 4,
+      "review_count": 55,
+      "price": 660,
+      "category": "Phones",
+      "new_product": true,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": ["#000", "#DB4444"]
+    },
+    {
+      "id": 8,
+      "photo": "/assets/images/jacket.png",
+      "title": "Quilted Satin Jacket",
+      "description": "Stylish and warm satin jacket for any season.",
+      "rating": 4,
+      "review_count": 55,
+      "price": 660,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": null,
+      "colors": ["#184A48", "#DB4444"]
+    },
+    {
+      "id": 9,
+      "photo": "/assets/images/red-controller.png",
+      "title": "HAVIT HV-G92 Gamepad",
+      "description": "Versatile and responsive gamepad for gaming enthusiasts.",
+      "rating": 5,
+      "review_count": 88,
+      "price": 120,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": -40,
+      "discount_price": 160,
+      "colors": []
+    },
+    {
+      "id": 10,
+      "photo": "/assets/images/keyboard.png",
+      "title": "AK-900 Wired Keyboard",
+      "description": "The AK-900 Wired Keyboard is a sleek, high-performance keyboard designed for both work and play. It features a sturdy, ergonomic build with responsive keys that ensure fast and accurate typing. The keyboard boasts a classic layout with well-spaced keys and a comfortable typing experience, perfect for long working hours or gaming sessions. With its plug-and-play functionality, the AK-900 connects seamlessly to your computer via a durable wired USB connection, providing a reliable and uninterrupted connection. The minimalist design is complemented by a smooth matte finish, making it a stylish addition to any desk setup. Whether you’re typing documents, coding, or gaming, the AK-900 offers durability and performance to meet your needs.",
+      "rating": 4,
+      "review_count": 75,
+      "price": 960,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": -35,
+      "discount_price": 1160,
+      "colors": []
+    },
+    {
+      "id": 11,
+      "photo": "/assets/images/moniter.png",
+      "title": "IPS LCD Gaming Monitor",
+      "description": "The IPS LCD Gaming Monitor is designed for gamers who prioritize visual quality and color accuracy. Featuring an IPS (In-Plane Switching) panel, this monitor offers superior color reproduction, wide viewing angles, and consistent brightness, making it ideal for immersive gameplay and creative work. With its high refresh rate and low response time, the monitor ensures smooth motion and reduced blur during fast-paced gaming, providing a competitive edge. The adaptive sync technology helps eliminate screen tearing and stuttering, resulting in a seamless visual experience. The monitor also incorporates adjustable stand options for customized viewing angles and an ultra-slim bezel for an enhanced, borderless look. With a sleek design and advanced features, the IPS LCD Gaming Monitor is a powerful addition to any gaming setup." ,
+      "rating": 5,
+      "review_count": 99,
+      "price": 370,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": 30,
+      "discount_price": 400,
+      "colors": []
+    },
+    {
+      "id": 12,
+      "photo": "/assets/images/cooler.png",
+      "title": "RGB liquid CPU Cooler",
+      "description": "The RGB Liquid CPU Cooler is a high-performance cooling solution designed to keep your CPU temperatures in check while adding a touch of style to your PC build. Featuring advanced liquid cooling technology, this cooler efficiently dissipates heat away from the processor, ensuring optimal performance even during intensive gaming or heavy multitasking. The RGB lighting system allows you to customize the colors and lighting effects to match your setup's theme or mood, offering vibrant, dynamic illumination that enhances the aesthetics of your PC. The cooler comes with a sleek, durable pump and high-quality radiators, which provide excellent heat transfer and stability. With its easy installation process and quiet operation, the RGB liquid CPU cooler is a perfect blend of functionality and visual appeal for gamers and PC enthusiasts.",
+      "rating": 4,
+      "review_count": 65,
+      "price": 160,
+      "category": "Phones",
+      "new_product": false,
+      "discount_percentage": null,
+      "discount_price": 170,
+      "colors": []
+    }
+  ],
+  "categories": [
+    {
+      "name": "Phones",
+      "image": "/assets/icons/CellPhone.svg"
+    },
+    {
+      "name": "Computers",
+      "image": "/assets/icons/Computer.svg"
+    },
+    {
+      "name": "SmartWatch",
+      "image": "/assets/icons/SmartWatch.svg"
+    },
+    {
+      "name": "HeadPhones",
+      "image": "/assets/icons/eadphone.svg"
+    },
+    {
+      "name": "Gaming",
+      "image": "/assets/icons/Gamepad.svg"
+    },
+    {
+      "name": "Camera",
+      "image": "/assets/icons/Camera.svg"
+    }
+  ]
+}
