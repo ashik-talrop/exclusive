@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+
 import Downarrow from "../../assets/icons/short-arrow-down.svg";
 import Search from "../../assets/icons/search.svg";
 import Heart from "../../assets/icons/wishlist.svg";
 import Cart from "../../assets/icons/Cart.svg";
+import Menu from "../../assets/images/menu.png";
 import '../../App.css'
 
 // Styled Components
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState("English");
     const languages = ["English", "Malayalam", "Hindi", "Tamil", "Japanese"];
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
     const selectLanguage = (language) => {
@@ -57,7 +64,7 @@ const Header = () => {
             <div className="wrapper">
                 <NavSection>
                     <LogoDiv>
-                        <Logo>Exclusive</Logo>
+                        <Logo to="/">Exclusive</Logo>
                     </LogoDiv>
                     <NavDiv>
                         <List href="#">Home</List>
@@ -73,7 +80,30 @@ const Header = () => {
                         <Liked src={Heart} alt="Heart" />
                         <CartImg src={Cart} alt="Cart" />
                     </CardDiv>
+                    <Hamburger onClick={toggleMenu}>
+                        <Hamicon src={Menu} alt="Menu"/>
+                    </Hamburger>
                 </NavSection>
+                {menuOpen && (
+                <SlidingMenu>
+                    <MenuCloseButton onClick={toggleMenu}>X</MenuCloseButton>
+                    <SearchContainer>
+                            <SearchInput placeholder="What are you looking for?" />
+                            <SearchIcon src={Search} alt="Search" />
+                        </SearchContainer>
+                    <MenuLinks>
+                        <MenuItem href="#">Home</MenuItem>
+                        <MenuItem href="#">Contact</MenuItem>
+                        <MenuItem href="#">About</MenuItem>
+                        <MenuItem href="#">Sign Up</MenuItem>
+                    </MenuLinks>
+                    <MenuActions>
+                        
+                        <WishlistIcon src={Heart} alt="Wishlist" />
+                        <ShoppingCartIcon src={Cart} alt="Shopping Cart" />
+                    </MenuActions>
+                </SlidingMenu>
+            )}
             </div>
         <Hr />
 
@@ -87,6 +117,7 @@ export default Header;
 
 const Heading = styled.header`
     height: 50px;
+   
 `;
 
 const Sale = styled.div`
@@ -97,6 +128,9 @@ const Sale = styled.div`
     justify-content: center;
     position: relative;
     height: 48px;
+    @media (max-width: 480px) {
+        display: none;
+  }
 `;
 
 const Paragraph = styled.p`
@@ -122,6 +156,9 @@ const SelectLanguage = styled.div`
     display: flex;
     position: absolute;
     right: 158px;
+    @media (max-width: 980px) {
+        display: none;
+  }
 `;
 
 const Right = styled.div`
@@ -162,6 +199,7 @@ const DropDownMenu = styled.ul`
     padding: 5px 0;
     width: 100px;
     z-index: 10;
+    
 `;
 
 const DropDownItem = styled.li`
@@ -178,22 +216,30 @@ const NavSection = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 25px;
+    @media (max-width: 980px) {
+       margin-top:0px ;
+  }
 `;
 
-const LogoDiv = styled.div``;
+const LogoDiv = styled.div`
+    cursor: pointer;
+`;
 
 const Logo = styled.h3`
     font-size: 24px;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: 0.03em;
+   
 `;
 
 const NavDiv = styled.div`
     display: flex;
     justify-content: space-between;
     width: 367px;
-
+    @media (max-width: 1080px) {
+        display: none;
+  }
    
 `;
 
@@ -214,6 +260,9 @@ const List = styled.a`
 const CardDiv = styled.div`
     display: flex;
     align-items: center;
+    @media (max-width: 1080px) {
+        display: none;
+  }
 `;
 
 const SearchDiv = styled.div`
@@ -262,3 +311,99 @@ const Hr = styled.hr`
     border-top: .5px solid #a6a6a6;
     margin-top: -5px;
 `;
+const Hamburger = styled.div`
+    display: none;
+    @media (max-width: 1080px) {
+        width: 20px;
+        height:auto;
+        display: flex;
+    }
+
+
+`
+const Hamicon = styled.img`
+
+    width: 100%;
+    height: 100%;
+`
+const SlidingMenu = styled.div`
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+`;
+
+const MenuCloseButton = styled.button`
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    align-self: flex-end;
+    cursor: pointer;
+`;
+const SearchContainer = styled.div`
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: #f5f5f5;
+    padding: 10px 10px;
+    width: 243px;
+    justify-content: space-between;
+    border-radius: 6px;
+`
+const SearchInput = styled.input`
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    background-color: #f5f5f5;
+    &:focus {
+        outline: none; 
+        border: none; 
+    }
+`
+const MenuLinks = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 367px;
+    margin-top: 10px;
+    `
+const MenuItem = styled.a`
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #000;
+    text-decoration: none;
+    padding:10px;
+
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+    }
+`
+const MenuActions = styled.div`
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+`
+const WishlistIcon = styled.img`
+    width: 28px;
+    height: 28px;
+    margin-left: 10px;
+    cursor: pointer;
+`
+const ShoppingCartIcon = styled.img`
+    width: 32px;
+    height: 32px;
+    margin-left: 10px;
+    cursor: pointer;
+`

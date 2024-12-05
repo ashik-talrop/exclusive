@@ -41,12 +41,16 @@ const Card = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 1169px;
-	background: #ffffff;
+	/* background: #ffffff; */
 	border-radius: 8px;
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 	background-color: #000;
-	margin-top: 70px;
 	align-items: center;
+   
+    @media (max-width: 640px) {
+        display: none;
+  }
+
 `;
 
 const Left = styled.div`
@@ -65,7 +69,6 @@ const Series = styled.div`
 	margin-bottom: 1rem;
 	display: flex;
 	align-items: center;
-	/* margin-top: 50px; */
 `;
 
 const SeriesTitle = styled.h2`
@@ -73,6 +76,7 @@ const SeriesTitle = styled.h2`
 	font-weight: 400;
 	line-height: 24px;
 	color: #FAFAFA;
+   
 `;
 
 const Voucher = styled.div`
@@ -82,6 +86,11 @@ const Voucher = styled.div`
 	letter-spacing: 0.04em;
 	color:#FAFAFA;
 	width: 306px;
+    @media (max-width: 768px) {
+        font-size: 34px;
+        line-height: 46px;
+    }
+
 
 `;
 
@@ -114,6 +123,10 @@ const Button = styled.button`
         100% {
             text-shadow: 0 0 2px #b3d9ff, 0 0 4px #b3d9ff, 0 0 6px #b3d9ff, 0 0 8px #00aaff, 0 0 10px #00aaff, 0 0 12px #00aaff, 0 0 14px #00aaff;
         }
+    }
+    @media (max-width: 768px) {
+        text-underline-offset: 5px;
+
     }
 `;
 

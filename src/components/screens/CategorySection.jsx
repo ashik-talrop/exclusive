@@ -1,114 +1,137 @@
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import styled from 'styled-components';
-import data from '../data/data.json';
-// import car from '../../assets/images/car.png';
-import like from '../../assets/icons/wishlist.svg';
-import view from '../../assets/icons/Quick View.svg';
-import empty from '../../assets/icons/empty-star.svg';
+import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import data from "../data/data.json";
+import like from "../../assets/icons/wishlist.svg";
+import view from "../../assets/icons/Quick View.svg";
+import empty from "../../assets/icons/empty-star.svg";
 import star from "../../assets/icons/star.svg";
-import truck from "../../assets/icons/icon-delivery-1.svg"
-import headphones from "../../assets/icons/Icon-Customer service.svg"
-import guarantee from "../../assets/icons/safety.svg"
+import truck from "../../assets/icons/icon-delivery-1.svg";
+import headphones from "../../assets/icons/Icon-Customer service.svg";
+import guarantee from "../../assets/icons/safety.svg";
+
 
 function CategorySection() {
     const navigate = useNavigate();
-    const handleClick = () => {
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    // Function to navigate and scroll to top
+    const handleClick = (path) => {
         window.scrollTo(0, 0);
-        navigate("/view-all");
+        navigate(path);
     };
 
-    
+    // Filter products based on selected category
+    const filteredProducts = selectedCategory
+        ? data.products.filter(product => product.category === selectedCategory)
+        : data.products;
+
     return (
         <div className="wrapper">
-        <CategoryHeader>
-            <Bar />
-            <Subtitle>Categories</Subtitle>
-        </CategoryHeader>
-        <SectionTitle>Browse By Category</SectionTitle>
-        <CategoryList>
-            {data.categories.map((category, index) => (
-                <CategoryCard key={index}>
-                    <CategoryIcon src={category.image} alt={category.name} />
-                    <CategoryName>{category.name}</CategoryName>
-                </CategoryCard>
-            ))}
-        </CategoryList>
-        <Products>
-            {data.products.slice(0, 8).map((product, index) => (
-                <ProductCard key={index}>
-                    <ProductImageSection>
-                        <ProductImgContainer>
-                            <ProductImage src={product.photo} alt={product.title} />
-                        </ProductImgContainer>
-                        {product.new_product && <NewBadge>NEW</NewBadge>}
-                        <Like src={like} alt="like" position="right-10" />
-                        <View src={view} alt="view" position="right-40" />
-                        <Add>Add To Cart</Add>
-                    </ProductImageSection>
-                    <ProductDetails>
-                        <ProductTitle>{product.title}</ProductTitle>
-                        <ProductCounts>
-                            <ProductPrice>${product.discount_price || product.price}</ProductPrice>
-                            <ProductReview>
-                                {Array.from({ length: 5 }, (_, i) => (
-                                    <StarIcon key={i} src={i < Math.floor(product.rating) ? star : empty} alt="star" />
-                                ))}
-                            </ProductReview>
-                            <ReviewCount>({product.review_count})</ReviewCount>
-                        </ProductCounts>
-                        {product.colors && product.colors.length > 0 && (
-                            <ColorOptions>
-                                {product.colors.map((color, index) => (
-                                    <ColorSwatch key={index} color={color} />
-                                ))}
-                            </ColorOptions>
-                        )}
-                    </ProductDetails>
-                </ProductCard>
-            ))}
-        </Products>
-        <StyledHr />
+            <CategoryHeader>
+                <Bar />
+                <Subtitle>Categories</Subtitle>
+            </CategoryHeader>
+            <SectionTitle>Browse By Category</SectionTitle>
+            <CategoryList>
+                {data.categories.map((category, index) => (
+                    <CategoryCard
+                        key={index}
+                        onClick={() => setSelectedCategory(category.name)}
+                    >
+                        <CategoryIcon src={category.image} alt={category.name} />
+                        <CategoryName>{category.name}</CategoryName>
+                    </CategoryCard>
+                ))}
+            </CategoryList>
+            <Products>
+                {filteredProducts.slice(0, 8).map((product, index) => (
+                    <ProductCard
+                        key={index}
+                        onClick={() => handleClick(`/product/${product.id}`)}
+                    >
+                        <ProductImageSection>
+                            <ProductImgContainer>
+                                <ProductImage src={product.photo} alt={product.title} />
+                            </ProductImgContainer>
+                            {product.new_product && <NewBadge>NEW</NewBadge>}
+                            <LikeBg>
+                                <Like src={like} alt="like" position="right-10" />
+                            </LikeBg>
+                            <View src={view} alt="view" position="right-40" />
+                            <Add>Add To Cart</Add>
+                        </ProductImageSection>
+                        <ProductDetails>
+                            <ProductTitle>{product.title}</ProductTitle>
+                            <ProductCounts>
+                                <ProductPrice>
+                                    ${product.discount_price || product.price}
+                                </ProductPrice>
+                                <ProductReview>
+                                    {Array.from({ length: 5 }, (_, i) => (
+                                        <StarIcon
+                                            key={i}
+                                            src={i < Math.floor(product.rating) ? star : empty}
+                                            alt="star"
+                                        />
+                                    ))}
+                                </ProductReview>
+                                <ReviewCount>({product.review_count})</ReviewCount>
+                            </ProductCounts>
+                            {product.colors && product.colors.length > 0 && (
+                                <ColorOptions>
+                                    {product.colors.map((color, index) => (
+                                        <ColorSwatch key={index} color={color} />
+                                    ))}
+                                </ColorOptions>
+                            )}
+                        </ProductDetails>
+                    </ProductCard>
+                ))}
+            </Products>
+            
+            <StyledHr />
 
-        <AllProducts>
-            <ButtonSection>
-                <MainButton onClick={handleClick}>View All Products</MainButton>
-            </ButtonSection>
-            <InfoBanners>
-                <Info>
-                    <GrayImg>
-                        <BlackBox>
-                            <Logo src={truck} alt="truck"/>
-                        </BlackBox>
-                    </GrayImg>
-                    <InfoTitle>FREE AND FAST DELIVERY</InfoTitle>
-                    <InfoSubtitle>Free delivery for all orders over $140</InfoSubtitle>
-                </Info>
-                <Info>
-                    <GrayImg>
-                        <BlackBox>
-                            <Logo src={headphones} alt="Customer service"/>
-                        </BlackBox>
-                    </GrayImg>
-                    <InfoTitle>24/7 CUSTOMER SERVICE</InfoTitle>
-                    <InfoSubtitle>Friendly 24/7 customer support</InfoSubtitle>
-                </Info>
-                <Info>
-                    <GrayImg>
-                        <BlackBox>
-                            <Logo src={guarantee} alt="guarantee"/>
-                        </BlackBox>
-                    </GrayImg>
-                    <InfoTitle>MONEY BACK GUARANTEE</InfoTitle>
-                    <InfoSubtitle>We reurn money within 30 days</InfoSubtitle>
-                </Info>
-            </InfoBanners>
-
-        </AllProducts>
-    </div>
+            <AllProducts>
+                <ButtonSection>
+                    <MainButton onClick={() => handleClick("/view-all")}>View All Products</MainButton>
+                </ButtonSection>
+                <InfoBanners>
+                    <Info>
+                        <GrayImg>
+                            <BlackBox>
+                                <Logo src={truck} alt="truck" />
+                            </BlackBox>
+                        </GrayImg>
+                        <InfoTitle>FREE AND FAST DELIVERY</InfoTitle>
+                        <InfoSubtitle>Free delivery for all orders over $140</InfoSubtitle>
+                    </Info>
+                    <Info>
+                        <GrayImg>
+                            <BlackBox>
+                                <Logo src={headphones} alt="Customer service" />
+                            </BlackBox>
+                        </GrayImg>
+                        <InfoTitle>24/7 CUSTOMER SERVICE</InfoTitle>
+                        <InfoSubtitle>Friendly 24/7 customer support</InfoSubtitle>
+                    </Info>
+                    <Info>
+                        <GrayImg>
+                            <BlackBox>
+                                <Logo src={guarantee} alt="guarantee" />
+                            </BlackBox>
+                        </GrayImg>
+                        <InfoTitle>MONEY BACK GUARANTEE</InfoTitle>
+                        <InfoSubtitle>We return money within 30 days</InfoSubtitle>
+                    </Info>
+                </InfoBanners>
+            </AllProducts>
+        </div>
     );
 }
+
 export default CategorySection;
+
 
 // Styled Components
 const CategoryHeader = styled.div`
@@ -143,6 +166,26 @@ const CategoryList = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     margin-bottom: 50px;
+    @media (max-width: 1280px) {
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+
+    }
+    @media (max-width: 1080px) {
+        grid-template-columns: repeat(auto-fit, minmax(191px, 1fr));
+    
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(171px, 1fr));
+    
+    }
+    @media (max-width: 640px) {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    
+    }
+    @media (max-width: 480px) {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    
+    }
 `;
 
 const CategoryCard = styled.div`
@@ -167,12 +210,20 @@ const CategoryIcon = styled.img`
     width: 56px;
     height: auto;
     margin-bottom: 10px;
+    @media (max-width: 480px) {
+        width: 40px;
+
+    }
 `;
 
 const CategoryName = styled.p`
     font-size: 16px;
     font-weight: 500;
     color: #000000;
+    @media (max-width: 480px) {
+        font-size: 12px;
+
+    }
 `;
 
 // Product Card Styling
@@ -204,6 +255,9 @@ const ProductImgContainer = styled.div`
     img {
         object-fit: scale-down;
     }
+    @media (max-width: 1280px) {
+        width: 100%;
+    }
 `;
 
 const ProductImage = styled.img`
@@ -225,16 +279,21 @@ const NewBadge = styled.div`
 `;
 
 const Like = styled.img`
+    cursor: pointer;
+    margin-top: 3px;
+`;
+const LikeBg = styled.div`
+    background-color: #fff;
     position: absolute;
     top: 10px;
     right: 10px;
     width: 25px;
-    height: auto;
-    cursor: pointer;
-    background-color: #fff;
+    height: 25px;
     border-radius: 50%;
     padding: 5px;
-`;
+    text-align: center;
+`
+
 const View = styled.img`
     position: absolute;
     top: 50px;
@@ -252,6 +311,9 @@ const ProductDetails = styled.div`
     text-align: left;
     width: 240px;
     cursor: pointer;
+    @media (max-width: 1280px) {
+        width: 100%;
+    }
 `;
 
 const ProductTitle = styled.div`
@@ -322,6 +384,19 @@ const Products = styled.div`
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 30px;
     grid-row-gap: 10px;
+
+    @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+
+    }
+    @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    }
+    @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+
+    }
 `
 const StyledHr = styled.hr`
   border: none;
@@ -341,6 +416,9 @@ const ButtonSection = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
+    @media (max-width: 1280px) {
+        margin-top: 40px;
+    }
     
 `
 const MainButton = styled.button`
@@ -364,15 +442,33 @@ const InfoBanners = styled.div`
   
 `;
 
-// Individual Info section container
 const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  width: 300px;
- 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    width: 300px;
+    
+    @media (max-width: 1400px) {
+        width: 28%;
+    }
+    @media (max-width: 1280px) {
+        width: 27%;
+    }
+    @media (max-width: 1080px) {
+        width: 26%;
+    }
+    @media (max-width: 980px) {
+        width: 25%;
+    }
+    @media (max-width: 768px) {
+        width: 23%;
+    }
+
+    @media (max-width: 640px) {
+        width: 100%;
+    }
 
 `;
 

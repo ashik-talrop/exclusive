@@ -7,19 +7,29 @@ import Footer from '../includs/Footer';
 
 function MainPage() {
   return (
-    <MainContainer>
-      <Header />
-      <Spotlight />
-      <CategorySection/>
-      <Footer/>
-    </MainContainer>
+    <>    
+      <MainContainer>
+        <Header />
+        <Spotlight />
+      </MainContainer>
+
+        <CategorySection/>
+        <Footer/>
+    </>
+
   );
 }
 
 export default MainPage;
 
 const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 130px;
+    @media (max-width: 768px) {
+      gap: 80px;
+    }
+    @media (max-width: 480px) {
+      gap: 0px;
+    }
 `;
