@@ -219,6 +219,7 @@ const PageContainer = styled.div`
     margin-bottom: 130px;
     @media (max-width: 480px) {
         margin-top: 60px;
+        margin-bottom: 60px;
   }
 
 `;
@@ -291,7 +292,7 @@ const Left = styled.div`
     }
     @media (max-width: 768px) {
         width: 90%;
-        height: auto;
+        height: 90%;
         margin-bottom: 20px;
     }
 `;
