@@ -212,6 +212,7 @@ const NavSection = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 25px;
+    margin-bottom: 20px;
     @media (max-width: 980px) {
         margin-top: 0px;
     }
