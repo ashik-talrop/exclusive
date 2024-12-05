@@ -8,13 +8,15 @@ import instagram from "../../assets/icons/icon-instagram.svg";
 import linkedin from "../../assets/icons/Icon-Linkedin.svg";
 import scanner from "../../assets/images/steyp.svg";
 import arrow from "../../assets/icons/send.svg";
-import down from "../../assets/icons/short-arrow-down.svg"
+import down from "../../assets/icons/short-arrow-down.svg";
 export default function Footer() {
     return (
         <Wrapper>
             <FooterContainer>
                 <Section>
-                    <SectionTitle>Exclusive <DownArrow  src={down} alt="down"/> </SectionTitle>
+                    <SectionTitle>
+                        Exclusive <DownArrow src={down} alt="down" />{" "}
+                    </SectionTitle>
                     <Text>Subscribe</Text>
                     <Text>Get 10% off your first order</Text>
                     <InputContainer>
@@ -24,33 +26,45 @@ export default function Footer() {
                         </Button>
                     </InputContainer>
                 </Section>
-                    <Section>
-                        <SectionTitle>Support<DownArrow  src={down} alt="down"/> </SectionTitle>
-                        <Textiii>
-                            111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.
-                        </Textiii>
-                        <Text>exclusive@gmail.com</Text>
-                        <Text>+88015-88888-9999</Text>
-                    </Section>
-
-                    <Section>
-                        <SectionTitle>Account<DownArrow  src={down} alt="down"/> </SectionTitle>
-                        <Link href="#">My Account</Link>
-                        <Link href="#">Login / Register</Link>
-                        <Link href="#">Cart</Link>
-                        <Link href="#">Wishlist</Link>
-                        <Link href="#">Shop</Link>
-                    </Section>
-
-                    <Section>
-                        <SectionTitle>Quick Link<DownArrow  src={down} alt="down"/> </SectionTitle>
-                        <Link href="#">Privacy Policy</Link>
-                        <Link href="#">Terms Of Use</Link>
-                        <Link href="#">FAQ</Link>
-                        <Link href="#">Contact</Link>
-                    </Section>
                 <Section>
-                    <SectionTitle>Download App<DownArrow  src={down} alt="down"/> </SectionTitle>
+                    <SectionTitle>
+                        Support
+                        <DownArrow src={down} alt="down" />{" "}
+                    </SectionTitle>
+                    <Textiii>
+                        111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.
+                    </Textiii>
+                    <Text>exclusive@gmail.com</Text>
+                    <Text>+88015-88888-9999</Text>
+                </Section>
+
+                <Section>
+                    <SectionTitle>
+                        Account
+                        <DownArrow src={down} alt="down" />{" "}
+                    </SectionTitle>
+                    <Link href="#">My Account</Link>
+                    <Link href="#">Login / Register</Link>
+                    <Link href="#">Cart</Link>
+                    <Link href="#">Wishlist</Link>
+                    <Link href="#">Shop</Link>
+                </Section>
+
+                <Section>
+                    <SectionTitle>
+                        Quick Link
+                        <DownArrow src={down} alt="down" />{" "}
+                    </SectionTitle>
+                    <Link href="#">Privacy Policy</Link>
+                    <Link href="#">Terms Of Use</Link>
+                    <Link href="#">FAQ</Link>
+                    <Link href="#">Contact</Link>
+                </Section>
+                <Section>
+                    <SectionTitle>
+                        Download App
+                        <DownArrow src={down} alt="down" />{" "}
+                    </SectionTitle>
                     <TextSmall>Save $3 with App New User Only</TextSmall>
                     <ScannerTab>
                         <Scanner src={scanner} alt="Scanner" />
@@ -78,8 +92,8 @@ export default function Footer() {
 }
 
 const Wrapper = styled.div`
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    background-color: #000;
+    color: #fff;
     padding: 40px 20px;
 `;
 
@@ -89,16 +103,16 @@ const FooterContainer = styled.div`
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
-	@media (max-width: 980px) {
-		flex-direction: column ;
-	}
+    @media (max-width: 980px) {
+        flex-direction: column;
+    }
 `;
 
 const Section = styled.div`
     margin: 10px;
-	@media (max-width: 980px) {
-		margin: 0px 10px;
-	}
+    @media (max-width: 980px) {
+        margin: 0px 10px;
+    }
 `;
 
 const SectionTitle = styled.h3`
@@ -106,9 +120,9 @@ const SectionTitle = styled.h3`
     font-weight: 700;
     line-height: 24px;
     letter-spacing: 0.03em;
-	@media (max-width: 980px) {
+    @media (max-width: 980px) {
         display: flex;
-		justify-content: space-between;
+        justify-content: space-between;
     }
 `;
 
@@ -116,7 +130,7 @@ const InputContainer = styled.div`
     display: flex;
     margin-top: 10px;
     border: 1px solid #fff;
-	@media (max-width: 980px) {
+    @media (max-width: 980px) {
         display: none;
     }
 `;
@@ -153,7 +167,7 @@ const ScannerTab = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 200px;
-	@media (max-width: 980px) {
+    @media (max-width: 980px) {
         display: none;
     }
 `;
@@ -187,7 +201,7 @@ const SocialIcons = styled.div`
         width: 24px;
         height: 24px;
     }
-	@media (max-width: 980px) {
+    @media (max-width: 980px) {
         display: none;
     }
 `;
@@ -226,7 +240,7 @@ const TextSmall = styled.p`
     font-weight: 500;
     line-height: 18px;
     color: #fafafa;
-	@media (max-width: 980px) {
+    @media (max-width: 980px) {
         display: none;
     }
 `;
@@ -237,10 +251,9 @@ const Textiii = styled.p`
     }
 `;
 
-const DownArrow =styled.img`
-	display: none;
-	@media (max-width: 980px) {
+const DownArrow = styled.img`
+    display: none;
+    @media (max-width: 980px) {
         display: block;
-		/* margin-left: 2%; */
     }
-`
+`;

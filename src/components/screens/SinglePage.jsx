@@ -1,4 +1,4 @@
-import React , { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../includs/Header";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ export default function ProductPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, [id]);
+    }, [id]);
     return (
         <div>
             <Header />
@@ -220,8 +220,7 @@ const PageContainer = styled.div`
     @media (max-width: 480px) {
         margin-top: 60px;
         margin-bottom: 60px;
-  }
-
+    }
 `;
 
 const CategoryName = styled.div`
@@ -232,7 +231,6 @@ const CategoryName = styled.div`
     font-size: 14px;
     color: #555;
     margin-bottom: 50px;
-
 `;
 
 const Home = styled.span`
@@ -261,19 +259,17 @@ const ProductName = styled.span`
     @media (max-width: 360px) {
         font-size: 13px;
         margin-left: 4px;
-    }   
+    }
 `;
 const SinglePageListing = styled.div`
     display: flex;
     justify-content: space-between;
     @media (max-width: 1280px) {
-
-    align-items: center;
+        align-items: center;
     }
     @media (max-width: 768px) {
         flex-direction: column;
     }
-
 `;
 const Left = styled.div`
     background-color: #f5f5f5;
@@ -308,10 +304,10 @@ const Right = styled.div`
         margin-top: 0px;
     }
     @media (max-width: 1080px) {
-    width: 42%;
+        width: 42%;
     }
     @media (max-width: 768px) {
-    width: 100%;
+        width: 100%;
     }
 `;
 
@@ -371,8 +367,7 @@ const Description = styled.p`
     white-space: normal;
     @media (max-width: 1080px) {
         width: 100%;
-  }
-
+    }
 `;
 
 const Hr = styled.hr`

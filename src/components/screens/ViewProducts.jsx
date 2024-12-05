@@ -42,7 +42,11 @@ export default function ViewProducts() {
                                 </DiscountPercentage>
                             )}
                             <LikeBg>
-                            <Like src={like} alt="like" position="right-10" />
+                                <Like
+                                    src={like}
+                                    alt="like"
+                                    position="right-10"
+                                />
                             </LikeBg>
                             <View src={view} alt="view" position="right-40" />
                             <Add>Add To Cart</Add>
@@ -57,41 +61,32 @@ export default function ViewProducts() {
                                     </DiscountPrice>
                                 )}
                                 <ProductReview>
-                                    {Array.from(
-                                        { length: 5 },
-                                        (_, i) => (
-                                            <StarIcon
-                                                key={i}
-                                                src={
-                                                    i <
-                                                    Math.floor(
-                                                        product.rating
-                                                    )
-                                                        ? star
-                                                        : empty
-                                                }
-                                                alt="star"
-                                            />
-                                        )
-                                    )}
+                                    {Array.from({ length: 5 }, (_, i) => (
+                                        <StarIcon
+                                            key={i}
+                                            src={
+                                                i < Math.floor(product.rating)
+                                                    ? star
+                                                    : empty
+                                            }
+                                            alt="star"
+                                        />
+                                    ))}
                                 </ProductReview>
                                 <ReviewCount>
                                     ({product.review_count})
                                 </ReviewCount>
                             </ProductCounts>
-                            {product.colors &&
-                                product.colors.length > 0 && (
-                                    <ColorOptions>
-                                        {product.colors.map(
-                                            (color, index) => (
-                                                <ColorSwatch
-                                                    key={index}
-                                                    color={color}
-                                                />
-                                            )
-                                        )}
-                                    </ColorOptions>
-                                )}
+                            {product.colors && product.colors.length > 0 && (
+                                <ColorOptions>
+                                    {product.colors.map((color, index) => (
+                                        <ColorSwatch
+                                            key={index}
+                                            color={color}
+                                        />
+                                    ))}
+                                </ColorOptions>
+                            )}
                         </ProductDetails>
                     </ProductCard>
                 ))}
@@ -99,7 +94,6 @@ export default function ViewProducts() {
         </div>
     );
 }
-
 
 const ProductCard = styled.div`
     display: flex;
@@ -117,14 +111,12 @@ const ProductImageSection = styled.div`
 const Add = styled.div`
     display: none;
     position: absolute;
-    
-`
-
+`;
 const ProductImgContainer = styled.div`
     width: 270px;
     height: 250px;
     overflow: hidden;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 
     img {
         object-fit: scale-down;
@@ -137,14 +129,13 @@ const ProductImgContainer = styled.div`
 const ProductImage = styled.img`
     width: 100%;
     height: 100%;
-
 `;
 
 const NewBadge = styled.div`
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #00FF66;
+    background-color: #00ff66;
     color: #fff;
     font-size: 12px;
     padding: 5px 10px;
@@ -166,7 +157,7 @@ const LikeBg = styled.div`
     border-radius: 50%;
     padding: 5px;
     text-align: center;
-`
+`;
 const View = styled.img`
     position: absolute;
     top: 50px;
@@ -191,20 +182,18 @@ const ProductTitle = styled.div`
     font-weight: 500;
     line-height: 24px;
     color: #000000;
-
 `;
 
 const ProductCounts = styled.div`
     display: flex;
     align-items: center;
-    
 `;
 
 const ProductPrice = styled.div`
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-   color: #DB4444;
+    color: #db4444;
     margin-right: 10px;
 `;
 
@@ -240,11 +229,11 @@ const ColorSwatch = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: ${({ color }) => color || '#000'};
+    background-color: ${({ color }) => color || "#000"};
     margin-right: 5px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    
+
     &:first-of-type {
         border: 2px solid #000000;
     }
@@ -258,23 +247,20 @@ const Products = styled.div`
     margin-top: 20px;
 
     @media (max-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
-
+        grid-template-columns: repeat(3, 1fr);
     }
     @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-
+        grid-template-columns: repeat(2, 1fr);
     }
     @media (max-width: 480px) {
-    grid-template-columns: repeat(1, 1fr);
-
+        grid-template-columns: repeat(1, 1fr);
     }
 `;
 const DiscountPercentage = styled.span`
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #DB4444;
+    background-color: #db4444;
     color: #fff;
     font-size: 12px;
     padding: 5px 10px;
@@ -288,29 +274,27 @@ const DiscountPrice = styled.p`
     text-decoration-line: line-through;
     color: #555;
     margin-right: 10px;
-`   
+`;
 
 const Section = styled.div`
-    display: flex ;
+    display: flex;
     margin-top: 150px;
     justify-content: space-around;
     width: 160px;
-    
+
     @media (max-width: 480px) {
-    margin-top: 50px;
-        
-  }
-`
+        margin-top: 50px;
+    }
+`;
 const Home = styled.p`
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;
     color: #808080;
-`
+`;
 const Pro = styled.p`
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;
     color: #000;
-`
-    
+`;
