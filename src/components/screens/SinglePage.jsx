@@ -90,10 +90,10 @@ export default function ProductPage() {
                                             <Card src={bus} alt="bus" />
                                             <Promotion>
                                                 <Tilt>Free Delivery</Tilt>
-                                                <Subtitle>
+                                                <Clickable>
                                                     Enter your postal code for
                                                     Delivery Availability
-                                                </Subtitle>
+                                                </Clickable>
                                             </Promotion>
                                         </Payment>
                                         <HrLine />
@@ -106,7 +106,7 @@ export default function ProductPage() {
                                                 <Tilt>Return Delivery</Tilt>
                                                 <Subtitle>
                                                     Free 30 Days Delivery
-                                                    Returns. Details
+                                                    Returns. <Clickable>Details</Clickable>
                                                 </Subtitle>
                                             </Promotion>
                                         </Payment>
@@ -218,7 +218,7 @@ const PageContainer = styled.div`
     margin-top: 130px;
     margin-bottom: 130px;
     @media (max-width: 480px) {
-        margin-top: 60px;
+        margin-top: 30px;
         margin-bottom: 60px;
     }
 `;
@@ -423,9 +423,15 @@ const Promotion = styled.div`
     align-items: flex-start;
 `;
 
-const Subtitle = styled.span`
+const Clickable = styled.a`
     font-size: 12px;
-    color: #555;
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+`;
+const Subtitle = styled.a`
+    font-size: 12px;
+    color: #000000;
 `;
 
 const Tilt = styled.h3`

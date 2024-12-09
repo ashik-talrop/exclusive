@@ -115,6 +115,9 @@ export default Header;
 
 const Heading = styled.header`
     height: 50px;
+    @media (max-width: 480px) {
+        margin-top: 20px;
+    }
 `;
 
 const Sale = styled.div`

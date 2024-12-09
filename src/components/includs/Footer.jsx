@@ -69,15 +69,15 @@ export default function Footer() {
                     <ScannerTab>
                         <Scanner src={scanner} alt="Scanner" />
                         <SocialPlatform>
-                            <Play src={playstore} alt="Google Play" />
-                            <Play src={appstore} alt="App Store" />
+                        <Linkk href="#">    <Play src={playstore} alt="Google Play" /></Linkk>
+                        <Linkk href="#">    <Play src={appstore} alt="App Store" /></Linkk>
                         </SocialPlatform>
                     </ScannerTab>
                     <SocialIcons>
-                        <img src={facebook} alt="Facebook" />
-                        <img src={twitter} alt="Twitter" />
-                        <img src={instagram} alt="Instagram" />
-                        <img src={linkedin} alt="LinkedIn" />
+                    <Linkk href="#"> <img src={facebook} alt="Facebook" /> </Linkk>
+                    <Linkk href="#">    <img src={twitter} alt="Twitter" /></Linkk>
+                    <Linkk href="#">    <img src={instagram} alt="Instagram" /></Linkk>
+                    <Linkk href="#">   <img src={linkedin} alt="LinkedIn" /></Linkk>
                     </SocialIcons>
                 </Section>
             </FooterContainer>
@@ -124,12 +124,16 @@ const SectionTitle = styled.h3`
         display: flex;
         justify-content: space-between;
     }
+    @media (max-width: 360px) {
+        font-size: 18px;
+    }
 `;
 
 const InputContainer = styled.div`
     display: flex;
     margin-top: 10px;
     border: 1px solid #fff;
+    border-radius: 4px;
     @media (max-width: 980px) {
         display: none;
     }
@@ -151,6 +155,7 @@ const Button = styled.button`
     color: #000;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
 `;
 
 const Text = styled.p`
@@ -190,6 +195,10 @@ const Link = styled.a`
         display: none;
     }
 `;
+
+const Linkk = styled.a`
+
+`
 
 const SocialIcons = styled.div`
     display: flex;
