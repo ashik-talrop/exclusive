@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled ,{ keyframes }  from "styled-components";
 import data from "../data/data.json";
 import like from "../../assets/icons/wishlist.svg";
 import view from "../../assets/icons/Quick View.svg";
@@ -58,6 +58,7 @@ function CategorySection() {
                                     src={product.photo}
                                     alt={product.title}
                                 />
+                                <AddCart> <Link to="#">Add To Cart</Link></AddCart>
                             </ProductImgContainer>
                             {product.new_product && <NewBadge>NEW</NewBadge>}
                             <LikeBg>
@@ -68,7 +69,6 @@ function CategorySection() {
                                 />
                             </LikeBg>
                             <View src={view} alt="view" position="right-40" />
-                            <Add>Add To Cart</Add>
                         </ProductImageSection>
                         <ProductDetails>
                             <ProductTitle>{product.title}</ProductTitle>
@@ -256,24 +256,66 @@ const ProductCard = styled.div`
 const ProductImageSection = styled.div`
     position: relative;
 `;
-const Add = styled.div`
-    display: none;
-    position: absolute;
+
+const Link = styled.a`
+    cursor: pointer;
+`;
+
+const slideUp = keyframes`
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const AddCart = styled.div`
+  background-color: #000;
+  position: absolute;
+  color: #fff;
+  bottom: 0px;
+  width: 98.5%;
+  text-align: center;
+  height: 40px;
+  display: none; 
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 16px;
+
+  &.animate {
+    display: flex;
+    animation: ${slideUp} 0.3s ease-in-out;
+  }
 `;
 
 const ProductImgContainer = styled.div`
-    width: 270px;
-    height: 250px;
-    overflow: hidden;
-    background-color: #f5f5f5;
+  width: 270px;
+  height: 250px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  position: relative;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 
-    img {
-        object-fit: scale-down;
-    }
-    @media (max-width: 1280px) {
-        width: 100%;
-    }
+  img {
+    object-fit: scale-down;
+  }
+
+  @media (max-width: 1280px) {
+    width: 100%;
+  }
+
+  &:hover ${AddCart} {
+    display: flex; 
+    animation: ${slideUp} 0.3s ease-in-out; 
+  }
 `;
+
 
 const ProductImage = styled.img`
     width: 100%;
