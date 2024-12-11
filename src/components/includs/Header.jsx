@@ -216,7 +216,7 @@ const NavSection = styled.div`
     align-items: center;
     margin-top: 25px;
     margin-bottom: 20px;
-    @media (max-width: 980px) {
+    @media (max-width: 480px) {
         margin-top: 0px;
     }
 `;

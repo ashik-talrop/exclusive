@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled , { keyframes } from "styled-components";
-import data from "../data/data.json";
+import styled, { keyframes } from "styled-components";
 import like from "../../assets/icons/wishlist.svg";
 import view from "../../assets/icons/Quick View.svg";
 import empty from "../../assets/icons/empty-star.svg";
 import star from "../../assets/icons/star.svg";
 
 export default function ViewProducts() {
+    const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch("https://fakestoreapi.com/products");
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const handleClick = (productId) => {
         window.scrollTo(0, 0);
@@ -23,7 +37,7 @@ export default function ViewProducts() {
                 <Pro>Products</Pro>
             </Section>
             <Products>
-                {data.products.map((product, index) => (
+                {products.map((product, index) => (
                     <ProductCard
                         key={index}
                         onClick={() => handleClick(product.id)}
@@ -31,18 +45,13 @@ export default function ViewProducts() {
                         <ProductImageSection>
                             <ProductImgContainer>
                                 <ProductImage
-                                    src={product.photo}
+                                    src={product.image}
                                     alt={product.title}
                                 />
                                 <AddCart>Add To Cart</AddCart>
-
                             </ProductImgContainer>
-                            {product.new_product && <NewBadge>NEW</NewBadge>}
-                            {product.discount_percentage !== null && (
-                                <DiscountPercentage>
-                                    {product.discount_percentage}%
-                                </DiscountPercentage>
-                            )}
+                            {product.new && <NewBadge>NEW</NewBadge>}
+                            
                             <LikeBg>
                                 <Like
                                     src={like}
@@ -56,17 +65,13 @@ export default function ViewProducts() {
                             <ProductTitle>{product.title}</ProductTitle>
                             <ProductCounts>
                                 <ProductPrice>${product.price}</ProductPrice>
-                                {product.discount_price !== null && (
-                                    <DiscountPrice>
-                                        ${product.discount_price}
-                                    </DiscountPrice>
-                                )}
+                                
                                 <ProductReview>
                                     {Array.from({ length: 5 }, (_, i) => (
                                         <StarIcon
                                             key={i}
                                             src={
-                                                i < Math.floor(product.rating)
+                                                i < Math.floor(product.rating.rate)
                                                     ? star
                                                     : empty
                                             }
@@ -75,7 +80,7 @@ export default function ViewProducts() {
                                     ))}
                                 </ProductReview>
                                 <ReviewCount>
-                                    ({product.review_count})
+                                    ({product.rating.count})
                                 </ReviewCount>
                             </ProductCounts>
                             {product.colors && product.colors.length > 0 && (
@@ -96,6 +101,7 @@ export default function ViewProducts() {
     );
 }
 
+
 const ProductCard = styled.div`
     display: flex;
     flex-direction: column;
@@ -104,6 +110,8 @@ const ProductCard = styled.div`
     overflow: hidden;
     margin-bottom: 50px;
     cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
 `;
 
 const ProductImageSection = styled.div`
@@ -147,13 +155,18 @@ const ProductImgContainer = styled.div`
   width: 270px;
   height: 250px;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   position: relative;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
     object-fit: scale-down;
+    width: 70%;
+    height: 70%;
   }
 
   @media (max-width: 1280px) {
@@ -223,6 +236,7 @@ const ProductTitle = styled.div`
     font-weight: 500;
     line-height: 24px;
     color: #000000;
+    width: 92%;
 `;
 
 const ProductCounts = styled.div`
@@ -297,25 +311,8 @@ const Products = styled.div`
         grid-template-columns: repeat(1, 1fr);
     }
 `;
-const DiscountPercentage = styled.span`
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #db4444;
-    color: #fff;
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-transform: uppercase;
-`;
-const DiscountPrice = styled.p`
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    text-decoration-line: line-through;
-    color: #555;
-    margin-right: 10px;
-`;
+
+
 
 const Section = styled.div`
     display: flex;

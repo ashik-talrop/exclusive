@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../includs/Header";
-import styled ,{ keyframes } from "styled-components";
-import data from "../data/data.json";
+import styled, { keyframes } from "styled-components";
 import bus from "../../assets/icons/icon-delivery.svg";
 import returnIcon from "../../assets/icons/Icon-return.svg";
 import empty from "../../assets/icons/empty-star.svg";
@@ -14,13 +13,49 @@ import Footer from "../includs/Footer";
 export default function ProductPage() {
     const { id } = useParams();
     const productId = Number(id);
-
-    const product = data.products.find((product) => product.id === productId);
+    const [product, setProduct] = useState(null);
+    const [relatedProducts, setRelatedProducts] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setProduct(data);
+                } else {
+                    console.error("Product not found");
+                }
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            }
+        };
+
+        fetchProduct();
+    }, [productId]);
+
+    useEffect(() => {
+        const fetchRelatedProducts = async () => {
+            try {
+                const response = await fetch("https://fakestoreapi.com/products");
+                if (response.ok) {
+                    const data = await response.json();
+                    const related = data.filter((product) => product.id !== productId);
+                    setRelatedProducts(related.sort(() => Math.random() - 0.5).slice(0, 4));
+                }
+            } catch (error) {
+                console.error("Error fetching related products:", error);
+            }
+        };
+
+        fetchRelatedProducts();
+    }, [productId]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
+
     return (
         <div>
             <Header />
@@ -35,7 +70,7 @@ export default function ProductPage() {
                             <SinglePageListing>
                                 <Left>
                                     <ItemImg
-                                        src={product.photo}
+                                        src={product.image}
                                         alt={product.title}
                                     />
                                 </Left>
@@ -43,26 +78,18 @@ export default function ProductPage() {
                                     <Title>{product.title}</Title>
                                     <Counts>
                                         <ProductRating>
-                                            {Array.from(
-                                                { length: 5 },
-                                                (_, i) => (
-                                                    <StarIcon
-                                                        key={i}
-                                                        src={
-                                                            i <
-                                                            Math.floor(
-                                                                product.rating
-                                                            )
-                                                                ? star
-                                                                : empty
-                                                        }
-                                                        alt="star"
-                                                    />
-                                                )
-                                            )}
+                                            {Array.from({ length: 5 }, (_, i) => (
+                                                <StarIcon
+                                                    key={i}
+                                                    src={i < Math.floor(product.rating.rate)
+                                                        ? star
+                                                        : empty}
+                                                    alt="star"
+                                                />
+                                            ))}
                                         </ProductRating>
                                         <ProductReview>
-                                            ({product.review_count} Reviews)
+                                            ({product.rating.count} Reviews)
                                         </ProductReview>
                                         <Stock>In Stock</Stock>
                                     </Counts>
@@ -71,20 +98,17 @@ export default function ProductPage() {
                                         {product.description}
                                     </Description>
                                     <Hr />
-                                    {product.colors &&
-                                        product.colors.length > 0 && (
-                                            <ColorOptions>
-                                                Colours:
-                                                {product.colors.map(
-                                                    (color, index) => (
-                                                        <ColorSwatch
-                                                            key={index}
-                                                            color={color}
-                                                        />
-                                                    )
-                                                )}
-                                            </ColorOptions>
-                                        )}
+                                    {product.colors && product.colors.length > 0 && (
+                                        <ColorOptions>
+                                            Colours:
+                                            {product.colors.map((color, index) => (
+                                                <ColorSwatch
+                                                    key={index}
+                                                    color={color}
+                                                />
+                                            ))}
+                                        </ColorOptions>
+                                    )}
                                     <PaymentAndWarrenty>
                                         <Payment>
                                             <Card src={bus} alt="bus" />
@@ -118,106 +142,94 @@ export default function ProductPage() {
                         <p>Product not found</p>
                     )}
                 </PageContainer>
-                <CategoryHeader>
-                    <Bar />
-                    <RelatedItem>Related Item</RelatedItem>
-                </CategoryHeader>
-                <Products>
-                    {data.products
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 4)
-                        .map((product, index) => (
-                            <ProductCard
-                                onClick={() => {
-                                    navigate(`/product/${product.id}`);
-                                }}
-                                key={index}
-                            >
-                                <ProductImageSection>
-                                    <ProductImgContainer>
-                                        <ProductImage
-                                            src={product.photo}
-                                            alt={product.title}
+                {relatedProducts.length > 0 && (
+                    <>
+                        <CategoryHeader>
+                            <Bar />
+                            <RelatedItem>Related Item</RelatedItem>
+                        </CategoryHeader>
+                        <Products>
+                            {relatedProducts.map((product, index) => (
+                                <ProductCard
+                                    onClick={() => {
+                                        navigate(`/product/${product.id}`);
+                                    }}
+                                    key={index}
+                                >
+                                    <ProductImageSection>
+                                        <ProductImgContainer>
+                                            <ProductImage
+                                                src={product.image}
+                                                alt={product.title}
+                                            />
+                                            <AddCart>Add To Cart</AddCart>
+                                        </ProductImgContainer>
+                                        {product.new && <NewBadge>NEW</NewBadge>}
+                                        <LikeBg>
+                                            <Like
+                                                src={like}
+                                                alt="like"
+                                                position="right-10"
+                                            />
+                                        </LikeBg>
+                                        <View
+                                            src={view}
+                                            alt="view"
+                                            position="right-40"
                                         />
-                                        <AddCart>Add To Cart</AddCart>
-                                        
-                                    </ProductImgContainer>
-                                    {product.new_product && (
-                                        <NewBadge>NEW</NewBadge>
-                                    )}
-                                    <LikeBg>
-                                        <Like
-                                            src={like}
-                                            alt="like"
-                                            position="right-10"
-                                        />
-                                    </LikeBg>
-                                    <View
-                                        src={view}
-                                        alt="view"
-                                        position="right-40"
-                                    />
-                                </ProductImageSection>
-                                <ProductDetails>
-                                    <ProductTitle>{product.title}</ProductTitle>
-                                    <ProductCounts>
-                                        <ProductPrice>
-                                            $
-                                            {product.discount_price ||
-                                                product.price}
-                                        </ProductPrice>
-                                        <ProductReview>
-                                            {Array.from(
-                                                { length: 5 },
-                                                (_, i) => (
+                                    </ProductImageSection>
+                                    <ProductDetails>
+                                        <ProductTitle>{product.title}</ProductTitle>
+                                        <ProductCounts>
+                                            <ProductPrice>
+                                                $
+                                                {product.discountPrice || product.price}
+                                            </ProductPrice>
+                                            <ProductReview>
+                                                {Array.from({ length: 5 }, (_, i) => (
                                                     <StarIcon
                                                         key={i}
-                                                        src={
-                                                            i <
-                                                            Math.floor(
-                                                                product.rating
-                                                            )
-                                                                ? star
-                                                                : empty
-                                                        }
+                                                        src={i < Math.floor(product.rating.rate)
+                                                            ? star
+                                                            : empty}
                                                         alt="star"
                                                     />
-                                                )
-                                            )}
-                                        </ProductReview>
-                                        <ReviewCount>
-                                            ({product.review_count})
-                                        </ReviewCount>
-                                    </ProductCounts>
-                                    {product.colors &&
-                                        product.colors.length > 0 && (
+                                                ))}
+                                            </ProductReview>
+                                            <ReviewCount>
+                                                ({product.rating.count})
+                                            </ReviewCount>
+                                        </ProductCounts>
+                                        {product.colors && product.colors.length > 0 && (
                                             <ColorOptions>
-                                                {product.colors.map(
-                                                    (color, index) => (
-                                                        <ColorSwatch
-                                                            key={index}
-                                                            color={color}
-                                                        />
-                                                    )
-                                                )}
+                                                {product.colors.map((color, index) => (
+                                                    <ColorSwatch
+                                                        key={index}
+                                                        color={color}
+                                                    />
+                                                ))}
                                             </ColorOptions>
                                         )}
-                                </ProductDetails>
-                            </ProductCard>
-                        ))}
-                </Products>
+                                    </ProductDetails>
+                                </ProductCard>
+                            ))}
+                        </Products>
+                    </>
+                )}
             </div>
             <Footer />
         </div>
     );
 }
 
+
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
     margin-top: 130px;
-    margin-bottom: 130px;
+    margin-bottom: 50px;
+
     @media (max-width: 480px) {
         margin-top: 30px;
         margin-bottom: 60px;
@@ -265,6 +277,7 @@ const ProductName = styled.span`
 const SinglePageListing = styled.div`
     display: flex;
     justify-content: space-between;
+
     @media (max-width: 1280px) {
         align-items: center;
     }
@@ -273,12 +286,13 @@ const SinglePageListing = styled.div`
     }
 `;
 const Left = styled.div`
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     width: 700px;
     height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     @media (max-width: 1400px) {
         width: 600px;
         height: 600px;
@@ -295,12 +309,13 @@ const Left = styled.div`
 `;
 const ItemImg = styled.img`
     object-fit: fill;
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
 `;
 
 const Right = styled.div`
     margin-top: 60px;
+    width: 50%;
     @media (max-width: 1280px) {
         margin-top: 0px;
     }
@@ -352,8 +367,11 @@ const Stock = styled.span`
 `;
 
 const Prize = styled.span`
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.03em;
+
     margin-bottom: 15px;
 `;
 
@@ -361,7 +379,7 @@ const Description = styled.p`
     font-size: 14px;
     font-weight: 400;
     line-height: 21px;
-    width: 373px;
+    width: 100%;
     height: 63px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -489,6 +507,7 @@ const ProductCard = styled.div`
     overflow: hidden;
     margin-bottom: 50px;
     cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 const ProductImageSection = styled.div`
     position: relative;
@@ -528,16 +547,22 @@ const AddCart = styled.div`
 `;
 
 const ProductImgContainer = styled.div`
-  width: 270px;
+  width: 100%;
   height: 250px;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   position: relative;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
     object-fit: scale-down;
+    width: 70%;
+    height: 70%;
+
   }
 
   @media (max-width: 1280px) {
@@ -606,6 +631,7 @@ const ProductTitle = styled.div`
     font-weight: 500;
     line-height: 24px;
     color: #000000;
+    width: 92%;
 `;
 
 const ProductCounts = styled.div`

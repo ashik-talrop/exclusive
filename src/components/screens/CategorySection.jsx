@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styled ,{ keyframes }  from "styled-components";
-import data from "../data/data.json";
+import styled, { keyframes } from "styled-components";
 import like from "../../assets/icons/wishlist.svg";
 import view from "../../assets/icons/Quick View.svg";
 import empty from "../../assets/icons/empty-star.svg";
@@ -12,7 +12,37 @@ import guarantee from "../../assets/icons/safety.svg";
 
 function CategorySection() {
     const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+
+    useEffect(() => {
+        const imageMapping = {
+            electronics: "/assets/images/electronics.png",
+            jewelery: "assets/images/jewellery.png",
+            "men's clothing": "assets/images/tshirt.png",
+            "women's clothing": "assets/images/woman-clothes.png",
+        };
+        axios
+            .get("https://fakestoreapi.com/products/categories")
+            .then((response) => {
+                const categoriesWithImages = response.data.map((category) => ({
+                    name: category,
+                    image: imageMapping[category] || "/images/default.jpg", 
+                }));
+                setCategories(categoriesWithImages);
+            })
+            .catch((error) => console.error("Error fetching categories:", error));
+
+        axios
+            .get("https://fakestoreapi.com/products")
+            .then((response) => {
+                setProducts(response.data);
+            })
+            .catch((error) => console.error("Error fetching products:", error));
+    }, []);
 
     const handleClick = (path) => {
         window.scrollTo(0, 0);
@@ -20,10 +50,8 @@ function CategorySection() {
     };
 
     const filteredProducts = selectedCategory
-        ? data.products.filter(
-              (product) => product.category === selectedCategory
-          )
-        : data.products;
+        ? products.filter((product) => product.category === selectedCategory)
+        : products;
 
     return (
         <div className="wrapper">
@@ -33,15 +61,12 @@ function CategorySection() {
             </CategoryHeader>
             <SectionTitle>Browse By Category</SectionTitle>
             <CategoryList>
-                {data.categories.map((category, index) => (
+                {categories.map((category, index) => (
                     <CategoryCard
                         key={index}
                         onClick={() => setSelectedCategory(category.name)}
                     >
-                        <CategoryIcon
-                            src={category.image}
-                            alt={category.name}
-                        />
+                        <CategoryIcon src={category.image} alt={category.name} />
                         <CategoryName>{category.name}</CategoryName>
                     </CategoryCard>
                 ))}
@@ -55,12 +80,13 @@ function CategorySection() {
                         <ProductImageSection>
                             <ProductImgContainer>
                                 <ProductImage
-                                    src={product.photo}
+                                    src={product.image}
                                     alt={product.title}
                                 />
-                                <AddCart> <Link to="#">Add To Cart</Link></AddCart>
+                                <AddCart>
+                                    <AddToCart to="#">Add To Cart</AddToCart>
+                                </AddCart>
                             </ProductImgContainer>
-                            {product.new_product && <NewBadge>NEW</NewBadge>}
                             <LikeBg>
                                 <Like
                                     src={like}
@@ -74,14 +100,14 @@ function CategorySection() {
                             <ProductTitle>{product.title}</ProductTitle>
                             <ProductCounts>
                                 <ProductPrice>
-                                    ${product.discount_price || product.price}
+                                    ${product.price}
                                 </ProductPrice>
                                 <ProductReview>
                                     {Array.from({ length: 5 }, (_, i) => (
                                         <StarIcon
                                             key={i}
                                             src={
-                                                i < Math.floor(product.rating)
+                                                i < Math.floor(product.rating?.rate)
                                                     ? star
                                                     : empty
                                             }
@@ -90,19 +116,9 @@ function CategorySection() {
                                     ))}
                                 </ProductReview>
                                 <ReviewCount>
-                                    ({product.review_count})
+                                    ({product.rating?.count})
                                 </ReviewCount>
                             </ProductCounts>
-                            {product.colors && product.colors.length > 0 && (
-                                <ColorOptions>
-                                    {product.colors.map((color, index) => (
-                                        <ColorSwatch
-                                            key={index}
-                                            color={color}
-                                        />
-                                    ))}
-                                </ColorOptions>
-                            )}
                         </ProductDetails>
                     </ProductCard>
                 ))}
@@ -157,6 +173,7 @@ function CategorySection() {
 }
 
 export default CategorySection;
+
 
 const CategoryHeader = styled.div`
     display: flex;
@@ -225,14 +242,7 @@ const CategoryCard = styled.div`
     }
 `;
 
-const CategoryIcon = styled.img`
-    width: 56px;
-    height: auto;
-    margin-bottom: 10px;
-    @media (max-width: 480px) {
-        width: 40px;
-    }
-`;
+
 
 const CategoryName = styled.p`
     font-size: 16px;
@@ -251,13 +261,18 @@ const ProductCard = styled.div`
     overflow: hidden;
     margin-bottom: 50px;
     cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+
+    
 `;
 
 const ProductImageSection = styled.div`
     position: relative;
+    margin-bottom: 20px;
 `;
 
-const Link = styled.a`
+const AddToCart = styled.a`
     cursor: pointer;
 `;
 
@@ -297,13 +312,17 @@ const ProductImgContainer = styled.div`
   width: 270px;
   height: 250px;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   position: relative;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     object-fit: scale-down;
+    height: 70%;
+    width: 70%;
   }
 
   @media (max-width: 1280px) {
@@ -323,17 +342,7 @@ const ProductImage = styled.img`
     object-fit: cover;
 `;
 
-const NewBadge = styled.div`
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #00ff66;
-    color: #fff;
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-transform: uppercase;
-`;
+
 
 const Like = styled.img`
     cursor: pointer;
@@ -378,6 +387,8 @@ const ProductTitle = styled.div`
     font-weight: 500;
     line-height: 24px;
     color: #000000;
+    margin-bottom: 10px;
+    width: 92%;
 `;
 
 const ProductCounts = styled.div`
@@ -415,24 +426,6 @@ const ReviewCount = styled.div`
     color: #555;
 `;
 
-const ColorOptions = styled.div`
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-`;
-
-const ColorSwatch = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: ${({ color }) => color || "#000"};
-    margin-right: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    &:first-of-type {
-        border: 2px solid #000000;
-    }
-`;
 const Products = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -556,4 +549,12 @@ const InfoSubtitle = styled.p`
     font-weight: 400;
     line-height: 21px;
     color: #000000;
+`;
+const CategoryIcon = styled.img`
+    width: 56px;
+    height: auto;
+    margin-bottom: 10px;
+    @media (max-width: 480px) {
+        width: 40px;
+    }
 `;
