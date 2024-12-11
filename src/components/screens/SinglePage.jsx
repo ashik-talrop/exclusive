@@ -253,10 +253,6 @@ const Home = styled.span`
     color: #808080;
     word-spacing: 12px;
 
-    &:hover {
-        color: #000;
-        text-decoration: underline;
-    }
     @media (max-width: 360px) {
         font-size: 13px;
         word-spacing: 4px;
