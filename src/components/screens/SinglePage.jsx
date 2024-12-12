@@ -376,10 +376,10 @@ const Description = styled.p`
     font-weight: 400;
     line-height: 21px;
     width: 100%;
-    height: 63px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    white-space: normal;
+    // height: 63px;
+    // overflow-y: auto;
+    // overflow-x: hidden;
+    // white-space: normal;
     @media (max-width: 1080px) {
         width: 100%;
     }
